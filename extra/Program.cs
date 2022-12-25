@@ -8,7 +8,7 @@ int offsetX = 4; // задаем интервал между символов
 int offsetY = Console.CursorTop; // задаем начальную точку
 
 
-int Factorial(int n)
+long Factorial(int n)
 {
     if (n == 0) return 1;
     return n * Factorial(n - 1);
@@ -17,7 +17,7 @@ int Factorial(int n)
 // вычисление элемента треугольника
 int GetPoint(int n, int m)
 {
-    return Factorial(n) / (Factorial(m) * Factorial(n - m));
+    return (int)(Factorial(n) / (Factorial(m) * Factorial(n - m)));
 }
 
 // генерируем данные для треугольника
@@ -56,9 +56,10 @@ void PrintTriangle(int[,] triangleData, int startPoint, int level = 0, int pos =
             Console.SetCursorPosition(xPos, level + offsetY);
             Console.Write(triangleData[level, pos]);
         }
-        PrintTriangle(triangleData, startPoint - offsetX, level + 1, pos);
+        if(pos == 0) PrintTriangle(triangleData, startPoint - offsetX, level + 1, pos);
         PrintTriangle(triangleData, startPoint + offsetX, level + 1, pos + 1);
     }
+    else return;
 }
 
 PrintTriangle(GenTriangleData(nValue), Console.WindowWidth / 2);
